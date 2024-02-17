@@ -1,0 +1,20 @@
+<resources>
+    <string name="app_name">Unscramble</string>
+    <string name="instructions">Unscramble the word using all the letters.</string>
+    <string name="skip">Skip</string>
+    <string name="submit">Submit</string>
+    <string name="score">Score: %d</string>
+    <string name="word_count">%d/10</string>
+    <string name="enter_your_word">Enter your word</string>
+    <string name="congratulations">Congratulations!</string>
+    <string name="you_scored">"You scored: %d"</string>
+    <string name="exit">Exit</string>
+    <string name="play_again">Play Again</string>
+    <string name="wrong_guess">Wrong Guess!</string>
+    <string name="confirm">confirm</string>
+    <string name="cancel">cancel</string>
+    <string name="hint">Hint</string>
+    <string name="confirm_text">Are you sure you want to proceed?</string>
+    <string name="out_of_hints">Sorry!! You are out of hints</string>
+    <string name="out_of_200">/200</string>
+</resources>
