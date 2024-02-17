@@ -2,13 +2,13 @@ package com.example.unscramble_game.ui
 
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
-import com.example.unscramble_game.ui.GameUiState
-import com.example.unscramble_data.data.MAX_NO_OF_WORDS
-import com.example.unscramble_data.data.SCORE_INCREASE
-import com.example.unscramble_data.data.allWords
+import com.example.unscramble_game.data.MAX_NO_OF_WORDS
+import com.example.unscramble_game.data.SCORE_INCREASE
+import com.example.unscramble_game.data.allWords
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -29,9 +29,9 @@ class GameViewModel : ViewModel() {
         return currentWord
     }
 
-    private var numberOfHints: MutableState<Int> = mutableStateOf(4)
-    fun getNumberOfHints(): Int {
-        return numberOfHints.value
+    private var numberOfHints: MutableState<Int> = mutableIntStateOf(4)
+    fun getNumberOfHints(): MutableState<Int> {
+        return numberOfHints
     }
 
     init {
@@ -126,7 +126,8 @@ class GameViewModel : ViewModel() {
         _uiState.update {
             currentState ->
             currentState.copy(
-                hintRequestAccepted = false
+                hintRequestAccepted = false,
+                outOfHints = false
             )
         }
     }

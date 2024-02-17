@@ -37,10 +37,11 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -68,7 +69,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = colorScheme.background
                 ) {
-                    var tabTransition by remember {mutableStateOf(1)}
+                    var tabTransition by rememberSaveable { mutableIntStateOf(value = 1)}
                     when(tabTransition) {
                         1 -> { WelcomePage(onButtonClick = {tabTransition += 1}) }
                         2 -> { GameScreen() }
@@ -95,7 +96,7 @@ fun WelcomePage(
             modifier = Modifier.background(colorScheme.background)
         ) {
             Text(
-                text = "Welcome To Lemonade App",
+                text = "Welcome To Unscramble game",
                 fontSize = 60.sp,
                 lineHeight = 65.sp,
                 textAlign = TextAlign.Center,
@@ -222,7 +223,7 @@ fun GameScreen(gameViewModel: GameViewModel = viewModel()) {
     if(gameUiState.outOfHints) {
         HintDialog(
             closeHintDialog = {gameViewModel.closeHintDialog()},
-            numberOfHints = 0,
+            numberOfHints = gameViewModel.getNumberOfHints(),
             currentWord = ""
         )
     }
@@ -315,7 +316,7 @@ fun GameLayout(
 @Composable
 fun HintDialog(
     closeHintDialog: () -> Unit,
-    numberOfHints: Int,
+    numberOfHints: MutableState<Int>,
     currentWord: String
 ) {
     AlertDialog(
@@ -325,10 +326,10 @@ fun HintDialog(
             Text(text = stringResource(R.string.hint))
         },
         text = {
-            if(numberOfHints == 0)
+            if(numberOfHints.value == 0)
                 Text(stringResource(R.string.out_of_hints))
             else
-                Text("Answer: $currentWord \n You have ${numberOfHints - 1} left.")
+                Text("Answer: $currentWord \n You have ${numberOfHints.value - 1} left.")
         },
         confirmButton = {
             Button(
@@ -336,7 +337,7 @@ fun HintDialog(
                     closeHintDialog()
                 }
             ) {
-                Text(stringResource(id = R.string.confirm))
+                Text(stringResource(id = R.string.ok))
             }
         }
     )
