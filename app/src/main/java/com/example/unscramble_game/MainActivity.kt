@@ -95,7 +95,7 @@ fun WelcomePage(
             modifier = Modifier.background(colorScheme.background)
         ) {
             Text(
-                text = "Welcome To Lemonade App",
+                text = "Welcome To Unscramble game",
                 fontSize = 60.sp,
                 lineHeight = 65.sp,
                 textAlign = TextAlign.Center,
